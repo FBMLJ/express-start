@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const port = parseInt(process.env.PORT, 10) || 8000;
 app.set('port', port);
+
+require('./routers/index')(app)
 const server = http.createServer(app);
 server.listen(port);
 module.exports = app
