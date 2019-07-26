@@ -1,4 +1,5 @@
-company = require('./company')
+// company = require('./company')
+user = require('./user')
 module.exports = {
-  company
+  user
 }
