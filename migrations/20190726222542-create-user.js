@@ -1,7 +1,8 @@
 'use strict';
+var bcrypt = require("bcrypt");
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,13 +10,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -25,6 +30,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    },{
+        hooks: {
+          beforeCreate: (user) => {
+            const salt = bcrypt.genSaltSync();
+            user.password = bcrypt.hashSync(user.password, salt);
+          }
+        },
+        instanceMethods: {
+          validPassword: function (password) {
+            return bcrypt.compareSync(password, this.password);
+          }
+        }    
     });
   },
   down: (queryInterface, Sequelize) => {
