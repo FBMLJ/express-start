@@ -7,5 +7,6 @@ module.exports = (app) => {
   };
   app.get('/', sessionChecker, (req, res) => res.redirect('/login'));
   userRouters(app, sessionChecker)
+  
   app.get('/home', (req, res) => res.render('static_pages/home'))
 }
