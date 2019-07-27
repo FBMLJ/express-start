@@ -3,12 +3,12 @@ module.exports = (app, sessionChecker) => {
 
   //Login
   app.route('/login')
-    .get(sessionChecker, (req, res) => res.render('user/sign_in'))
+    .get(sessionChecker, (req, res) => res.render('user/sign_in',{ layout: 'offline' }))
     .post((req, res) => user_controller.sign_in(req, res));
   // app.get('/login', sessionChecker,(req, res) => res.render('user/sign_in'))
   
   app.post('/cadastre', user_controller.create);
-  app.get('/cadastre', sessionChecker,(req, res) => res.render('user/sign_up'))
+  app.get('/cadastre', sessionChecker,(req, res) => res.render('user/sign_up', {layout: 'offline'}))
 
 
   app.get('/logout', (req, res) => {
