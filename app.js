@@ -43,6 +43,8 @@ app.use((req, res, next) => {
   //config port
   const port = parseInt(process.env.PORT, 10) || 8000;
   app.set('port', port);
+  
+
 
 require('./routers/index')(app)
 const server = http.createServer(app);
